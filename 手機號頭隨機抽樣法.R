@@ -1,17 +1,18 @@
 library("readxl")
 library("stringr")
 
-'-----號頭資料筆數設定-----------'
-
-data<-read_excel("T:/Public (WINDOWS-4E2081D)/電話資料庫/手機電話資料庫/@抽樣系統/1100512data.xlsx")
+##NCC公布手機前五碼資料讀取
+data<-read_excel(":/行動電話號頭.xlsx")
 a<-as.matrix(data)
 b<-a[,1]
+##資料筆數設定隨機產生四千筆
 c<-sample(b,size=40000,replace=T)
 c<-as.matrix(c)
-'-----後5碼-----------'
+##手機後五碼
 x<-as.matrix(sample(0:99999,length(c) , replace=TRUE))
 y <- as.matrix(str_pad( x, width = 5, pad = 0))
 z <- cbind(as.character(c),as.character(y))
 A<-list(paste(as.character(c),as.character(y)))
-write.table(A,file="T:/Public (WINDOWS-4E2081D)/Survey/中央健康保險署/111年運用資料治理建置健保政策應用及監測模式/第一次即時民調/TEL/手機/手機抽樣.csv",sep=",",row.names=F,col.names=F, na = "NA")
+##寫成CSV以利SQL讀取
+write.table(A,file=":/手機抽樣.csv",sep=",",row.names=F,col.names=F, na = "NA")
 
